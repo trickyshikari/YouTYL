@@ -7,6 +7,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
 class RegisterController extends Controller
 {
     /*
@@ -48,7 +52,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'name' => 'required|max:255|unique:users',
             'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
@@ -62,6 +66,17 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+      $name = $data['name'];
+      Schema::create($name, function (Blueprint $table) {
+          $table->increments('id');
+          $table->string('title');
+          $table->string('img');
+          $table->string('date');
+          $table->string('videoId');
+          $table->string('description');
+          $table->timestamps();
+      });
+
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],

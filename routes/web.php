@@ -14,3 +14,15 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/search', 'SearchController@index')->name('search');
+Route::post('/search', 'SearchController@query')->name('search');
+Route::get('/search/watch={id}', 'SearchController@viewSearch')->name('search');
+
+
+Route::get('/favorites', 'FavoritesController@index')->name('favorites');
+Route::get('/favorites', 'FavoritesController@userFav')->name('favorites');
+Route::post('/favorites', 'FavoritesController@isFav')->name('favorites');
+Route::get('/favorites/watch={id}', 'FavoritesController@viewFav')->name('favorites');
+
+Auth::routes();
